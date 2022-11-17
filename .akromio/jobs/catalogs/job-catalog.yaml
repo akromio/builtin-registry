@@ -1,0 +1,33 @@
+spec: v1.0
+desc: Catalog for working with Akromio job catalogs.
+
+dataset:
+  - const: src
+    desc: Template dir where the source templates are.
+    value: $(__dir)/_job-catalog
+  
+  - const: dst
+    desc: Local directory where to save the new catalog.
+    value: $(workDir)/$(krm.dirName)/$(krm.jobs.catalogs.path)
+  
+  - const: newJobCatalogQ
+    desc: Questions to perform for a new job catalog
+    tags: [hidden, questions]
+    value:
+      - input: name
+        title: Catalog name
+      
+      - input: desc
+        title: Catalog description
+
+defaultJobName: create
+jobs:
+  - macro: create
+    title: Create new job catalog
+    ini:
+      - quiet: $answers = inquire $(newJobCatalogQ) $(answers)
+    steps:
+      - fs.createDir $(dst)
+      - quiet: $item = cr.getItem $(src)/job-catalog.yaml.hbs
+      - quiet: $content = hbs.render $(item.value) $(answers)
+      - file.write $(content) $(dst)/$(answers.name).yaml
