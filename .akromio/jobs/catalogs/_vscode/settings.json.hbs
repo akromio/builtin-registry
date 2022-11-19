@@ -1,0 +1,13 @@
+{
+  "editor.formatOnSave": true,
+  "[markdown]": {
+    "editor.formatOnSave": {{formatMarkdownOnSave}}
+  },
+  {{#if prettier}}
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  {{/if}}
+  "cSpell.language": "{{lang}}",
+  "cSpell.words": []
+}
