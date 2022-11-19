@@ -5,6 +5,7 @@ dataset:
   - const: src
     desc: Template dir where the source templates are.
     value: $(__dir)/_job-catalog
+    tagsÇ: [hidden]
   
   - const: dst
     desc: Local directory where to save the new catalog.

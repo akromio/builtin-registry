@@ -1,0 +1,39 @@
+spec: v1.0
+desc: Catalog for working with Visual Studio Code.
+
+dataset:
+  - const: src
+    desc: Template dir where the source templates are.
+    value: $(__dir)/_vscode
+    tags: [hidden]
+  
+  - const: dst
+    desc: Local directory where to save the new catalog.
+    value: $(workDir)/.vscode
+  
+  - const: settingsQ
+    desc: Questions to perform for the creation of the settings.json file
+    tags: [hidden, questions]
+    value:
+      - input: lang
+        title: cSpell.language (for example, es, en, fr, it...)
+        defaultValue: en
+      
+      - confirm: prettier
+        title: Would you like to configure Prettier for TypeScript?
+        defaultValue: false
+      
+      - confirm: formatMarkdownOnSave
+        title: Would you like to format Markdown files on save?
+        defaultValue: false
+
+jobs:
+  - macro: settings
+    title: Create .vscode/settings
+    ini:
+      - quiet: $answers = inquire $(settingsQ) $(answers)
+    steps:
+      - fs.createDir $(dst)
+      - quiet: $item = cr.getItem $(src)/settings.json.hbs
+      - quiet: $content = hbs.render $(item.value) $(answers)
+      - file.write $(content) $(dst)/settings.json
