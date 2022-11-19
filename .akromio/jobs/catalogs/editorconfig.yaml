@@ -1,0 +1,32 @@
+spec: v1.0
+desc: Catalog for working with the .editorconfig file.
+
+dataset:
+  - const: src
+    desc: The source dir where the files are saved.
+    value: $(__dir)/_editorconfig
+    tags: [hidden]
+
+  - const: dst
+    desc: The destination dir.
+    value: $(workDir)
+  
+  - const: editorconfigQ
+    desc: Questions for the creation of the .editorconfig file
+    tags: [hidden, questions]
+    value:
+      - confirm: root
+        title: Is the file to create the root?
+        defaultValue: true
+
+defaultJobName: editorconfig
+
+jobs:
+  - macro: editorconfig
+    title: Create .editorconfig file
+    ini:
+      - quiet: $answers = inquire $(editorconfigQ) $(answers)
+    steps:
+      - quiet: $item = cr.getItem $(src)/.editorconfig.hbs
+      - quiet: $content = hbs.render $(item.value) $(answers)
+      - file.write $(content) $(dst)/.editorconfig
