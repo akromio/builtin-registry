@@ -1,0 +1,36 @@
+# use (
+#   
+# )
+
+export {
+  desc = "{{opDesc}}"
+  title = buildTitle
+  parameterizer = buildParams
+  fun = handle
+}
+
+/**
+ * Builds params from args.
+ */
+fn buildParams(args?) -> params: map
+  # with type(args) do
+  #   if list then
+  #     params.command = args[0]
+  #     params.opts = args[1] ?? {}
+  #   if text then
+  #     params.command = args
+  #     params.opts = {}
+  #   else
+  #     params = args
+
+/**
+ * Builds the title from the parameters.
+ */
+fn buildTitle(params) = $"{{opName}}: ..."
+
+/**
+ * Runs the operation
+ */
+@async
+fn handle(ctx=> {params})
+  nop

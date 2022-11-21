@@ -1,0 +1,14 @@
+export {
+  plugin = "{{piAbbr}}"
+  desc = "{{piDesc}}"
+  tags = []
+  {{#if (eq piType "simple")}}
+  defaultOpName = "default"
+  ops =
+    command = use("./ops/default")
+  {{else}}
+  # defaultOpName = "op"
+  ops =
+    # command = use("./ops/op")
+  {{/if}}
+}
