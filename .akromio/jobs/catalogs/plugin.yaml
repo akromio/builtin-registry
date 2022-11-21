@@ -1,0 +1,109 @@
+spec: v1.0
+desc: Catalog for working Akromio plugins.
+
+dataset:
+  - const: src
+    desc: Template dir where the source templates are.
+    value: $(__dir)/_plugin
+    tags: [hidden]
+  
+  - const: dst
+    desc: Local directory where to save the files.
+    value: $(workDir)
+  
+  - const: pluginQ
+    desc: Questions for creating a plugin scaffold.
+    tags: [hidden, questions]
+    value:
+      - input: piName
+        title: Plugin name
+      
+      - input: piAbbr
+        title: Plugin use abbreviation
+      
+      - input: piDesc
+        title: Plugin description
+      
+      - select: lang
+        title: Programming language
+        options: [Dogma]
+        value: Dogma
+      
+      - input: authorName
+        title: Author name
+      
+      - input: authorEmail
+        title: Author email
+      
+      - input: authorUrl
+        title: Author URL
+      
+      - input: bugsEmail
+        title: Plugin bugs email
+      
+      - input: gitOwner
+        title: Git owner name
+      
+      - input: gitRepo
+        title: Git repository name
+      
+      - select: piType
+        title: Plugin type
+        options: [simple, composite]
+    
+  - const: opQ
+    desc: Questions for creating an operation.
+    tags: [hidden, questions]
+    value:
+      - input: opName
+        title: Operation name
+      
+      - input: opDesc
+        title: Operation description
+      
+      - select: lang
+        title: Programming language
+        options: [Dogma]
+
+jobs:
+  - macro: plugin
+    title: Create plugin scaffold
+    ini:
+      - quiet: inquire $(pluginQ) $(answers)
+    local:
+      - var: item
+      - var: content
+    steps:
+      - fs.createDir $(dst)/src
+      - fs.createDir $(dst)/src/ops
+      - cr.copy $(src)/.babelrc $(dst)/.babelrc
+      - cr.copy $(src)/.c8rc.json $(dst)/.c8rc.json
+      - cr.copy $(src)/_gitignore $(dst)/.gitignore
+      - cr.copy $(src)/.mocharc.yaml $(dst)/.mocharc.yaml
+      - cr.copy $(src)/_npmignore $(dst)/.npmignore
+      - cr.copy $(src)/dogmac.yaml $(dst)/dogmac.yaml
+
+      - quiet: $item = cr.getItem $(src)/package.json.dogma.hbs
+      - quiet: $content = hbs.render $(item.value) $(answers)
+      - file.write $(content) $(dst)/package.json
+
+      - quiet: $item = cr.getItem $(src)/README.md.hbs
+      - quiet: $content = hbs.render $(item.value) $(answers)
+      - file.write $(content) $(dst)/README.md
+
+      - quiet: $item = cr.getItem $(src)/src/index.dog.hbs
+      - quiet: $content = hbs.render $(item.value) $(answers)
+      - file.write $(content) $(dst)/src/index.dog
+
+  - macro: op
+    title: Create an operation scaffold
+    ini:
+      - quiet: inquire $(opQ) $(answers)
+    local:
+      - var: item
+      - var: content
+    steps:
+      - quiet: $item = cr.getItem $(src)/src/ops/op.dog.hbs
+      - quiet: $content = hbs.render $(item.value) $(answers)
+      - file.write $(content) $(dst)/src/ops/$(answers.opName).dog
+      - [log, add to src/index.dog => $(answers.opName) = use("./ops/$(answers.opName)")]
