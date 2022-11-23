@@ -1,0 +1,61 @@
+spec: v1.0
+desc: Catalog for working with Visual Studio Code.
+
+dataset:
+  - const: src
+    desc: Dir where the source templates are.
+    value: $(__dir)/_$(__catalogName)
+    tags: [hidden]
+  
+  - const: dst
+    desc: Local directory where to save the files.
+    value: $(workDir)
+  
+  - const: createQ
+    desc: Questions for the creation of a new registry.
+    tags: [hidden, questions]
+    value:
+      - input: registryName
+        title: Registry name
+      
+      - input: registryDesc
+        title: Registry description
+  
+  - const: createCatalogQ
+    desc: Questions for the creation of a new catalog.
+    tags: [hidden, questions]
+    value:
+      - input: catalogName
+        title: Catalog name
+      
+      - input: catalogDesc
+        title: Catalog description
+      
+defaultJobName: create-registry
+jobs:
+  - macro: create-registry
+    title: Create registry
+    ini:
+      - quiet: $answers = inquire $(createQ) $(answers)
+    local:
+      - var: item
+      - var: content
+    steps:
+      - fs.createDir $(dst)/$(krm.dirName)/$(krm.jobs.catalogs.path)
+      - cr.copy $(src)/_gitignore $(dst)/.gitignore
+      - quiet: $item = cr.getItem $(src)/README.md.hbs
+      - quiet: $content = hbs.render $(item.value) $(answers)
+      - file.write $(content) $(dst)/README.md
+
+  - macro: create-catalog
+    title: Create catalog
+    ini:
+      - quiet: $answers = inquire $(createCatalogQ) $(answers)
+    local:
+      - var: item
+      - var: content
+    steps:
+      - fs.createDir $(dst)/$(krm.dirName)/$(krm.jobs.catalogs.path)/_$(answers.catalogName)
+      - quiet: $item = cr.getItem $(src)/catalog/catalog.yaml.hbs
+      - quiet: $content = hbs.render $(item.value) $(answers)
+      - file.write $(content) $(dst)/$(krm.dirName)/$(krm.jobs.catalogs.path)/$(answers.catalogName).yaml

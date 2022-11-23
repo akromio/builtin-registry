@@ -3,8 +3,8 @@ desc: Catalog for working Akromio plugins.
 
 dataset:
   - const: src
-    desc: Template dir where the source templates are.
-    value: $(__dir)/_plugin
+    desc: Dir where the source templates are.
+    value: $(__dir)/_$(__catalogName)
     tags: [hidden]
   
   - const: dst
@@ -69,7 +69,7 @@ jobs:
   - macro: plugin
     title: Create plugin scaffold
     ini:
-      - quiet: inquire $(pluginQ) $(answers)
+      - quiet: $answers = inquire $(pluginQ) $(answers)
     local:
       - var: item
       - var: content

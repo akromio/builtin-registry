@@ -1,0 +1,23 @@
+spec: v1.0
+desc: {{catalogDesc}}
+
+dataset:
+  - const: src
+    desc: Dir where the source templates are.
+    value: $(__dir)/_$(__catalogName)
+    tags: [hidden]
+  
+  - const: dst
+    desc: Local directory where to save the files.
+    value: $(workDir)
+  
+  # - const: jobQ
+  #   desc: Questions for the job.
+  #   tags: [hidden, questions]
+  #   value:
+  #     - input: name
+  #       title: title
+  
+# defaultJobName: 
+jobs:
+  # ...
