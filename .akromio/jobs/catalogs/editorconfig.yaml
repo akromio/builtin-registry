@@ -3,8 +3,8 @@ desc: Catalog for working with the .editorconfig file.
 
 dataset:
   - const: src
-    desc: The source dir where the files are saved.
-    value: $(__dir)/_editorconfig
+    desc: Dir where the source templates are.
+    value: $(__dir)/_$(__catalogName)
     tags: [hidden]
 
   - const: dst

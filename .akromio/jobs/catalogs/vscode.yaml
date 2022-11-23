@@ -4,7 +4,7 @@ desc: Catalog for working with Visual Studio Code.
 dataset:
   - const: src
     desc: Template dir where the source templates are.
-    value: $(__dir)/_vscode
+    value: $(__dir)/_$(__catalogName)
     tags: [hidden]
   
   - const: dst

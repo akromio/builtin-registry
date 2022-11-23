@@ -3,9 +3,9 @@ desc: Catalog for working with Akromio job catalogs.
 
 dataset:
   - const: src
-    desc: Template dir where the source templates are.
-    value: $(__dir)/_job-catalog
-    tagsÇ: [hidden]
+    desc: Dir where the source templates are.
+    value: $(__dir)/_$(__catalogName)
+    tags: [hidden]
   
   - const: dst
     desc: Local directory where to save the new catalog.
