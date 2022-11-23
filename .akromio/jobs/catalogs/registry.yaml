@@ -1,5 +1,5 @@
 spec: v1.0
-desc: Catalog for working with Visual Studio Code.
+desc: Catalog for working with Akromio registries.
 
 dataset:
   - const: src
@@ -11,7 +11,7 @@ dataset:
     desc: Local directory where to save the files.
     value: $(workDir)
   
-  - const: createQ
+  - const: createRegistryQ
     desc: Questions for the creation of a new registry.
     tags: [hidden, questions]
     value:
@@ -36,7 +36,7 @@ jobs:
   - macro: create-registry
     title: Create registry
     ini:
-      - quiet: $answers = inquire $(createQ) $(answers)
+      - quiet: $answers = inquire $(createRegistryQ) $(answers)
     local:
       - var: item
       - var: content
