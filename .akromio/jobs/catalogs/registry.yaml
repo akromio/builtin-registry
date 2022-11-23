@@ -26,7 +26,7 @@ jobs:
   - macro: create
     title: Create registry
     ini:
-      - quiet: $answers = inquire $(settingsQ) $(answers)
+      - quiet: $answers = inquire $(createQ) $(answers)
     steps:
       - fs.createDir $(krm.dirName)/$(krm.jobs.catalogs.path)
       - cr.copy $(src)/_gitignore $(dst)/.gitignore
