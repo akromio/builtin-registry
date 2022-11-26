@@ -15,40 +15,22 @@ dataset:
     desc: Questions for creating a plugin scaffold.
     tags: [hidden, questions]
     value:
-      - input: piName
-        title: Plugin name
-      
-      - input: piAbbr
-        title: Plugin use abbreviation
-      
-      - input: piDesc
-        title: Plugin description
-      
-      - select: lang
-        title: Programming language
+      - input: pluginName
+      - input: pluginAbbr
+      - input: pluginDesc
+
+      - select: programmingLanguage
         options: [Dogma]
         value: Dogma
       
       - input: authorName
-        title: Author name
-      
       - input: authorEmail
-        title: Author email
-      
       - input: authorUrl
-        title: Author URL
-      
       - input: bugsEmail
-        title: Plugin bugs email
-      
       - input: gitOwner
-        title: Git owner name
-      
       - input: gitRepo
-        title: Git repository name
       
-      - select: piType
-        title: Plugin type
+      - select: pluginType
         options: [simple, composite]
     
   - const: opQ
@@ -56,13 +38,8 @@ dataset:
     tags: [hidden, questions]
     value:
       - input: opName
-        title: Operation name
-      
       - input: opDesc
-        title: Operation description
-      
-      - select: lang
-        title: Programming language
+      - select: programmingLanguage
         options: [Dogma]
 
 jobs:

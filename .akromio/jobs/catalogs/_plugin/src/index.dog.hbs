@@ -1,8 +1,8 @@
 export {
-  plugin = "{{piAbbr}}"
-  desc = "{{piDesc}}"
+  plugin = "{{pluginAbbr}}"
+  desc = "{{pluginDesc}}"
   tags = []
-  {{#if (eq piType "simple")}}
+  {{#if (eq pluginType "simple")}}
   defaultOpName = "default"
   ops =
     command = use("./ops/default")
