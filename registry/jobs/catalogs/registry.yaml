@@ -17,6 +17,8 @@ dataset:
     value:
       - input: registryName
       - input: registryDesc
+      - input: registryDir
+        title: "Registry dir (local: .akromio; git: registry)"
   
   - const: createCatalogQ
     desc: Questions for the creation of a new catalog.
@@ -24,6 +26,8 @@ dataset:
     value:
       - input: catalogName
       - input: catalogDesc
+      - input: registryDir
+        title: "Registry dir (local: .akromio; git: registry)"
       
 defaultJobName: create-registry
 jobs:
@@ -33,7 +37,7 @@ jobs:
       - quiet: $answers = inquire $(createRegistryQ) $(answers)
     local: [item, content]
     steps:
-      - fs.createDir $(dst)/$(krm.dirName)/$(krm.jobs.catalogs.path)
+      - fs.createDir $(dst)/$(answers.registryDir)/$(krm.jobs.catalogs.path)
       - cr.copy $(src)/_gitignore $(dst)/.gitignore
       - quiet: $item = cr.getItem $(src)/README.md.hbs
       - quiet: $content = hbs.render $(item.value) $(answers)
@@ -45,7 +49,7 @@ jobs:
       - quiet: $answers = inquire $(createCatalogQ) $(answers)
     local: [item, content]
     steps:
-      - fs.createDir $(dst)/$(krm.dirName)/$(krm.jobs.catalogs.path)/_$(answers.catalogName)
+      - fs.createDir $(dst)/$(answers.registryDir)/$(krm.jobs.catalogs.path)/_$(answers.catalogName)
       - quiet: $item = cr.getItem $(src)/catalog/catalog.yaml.hbs
       - quiet: $content = hbs.render $(item.value) $(answers)
       - file.write $(content) $(dst)/$(krm.dirName)/$(krm.jobs.catalogs.path)/$(answers.catalogName).yaml
