@@ -52,4 +52,4 @@ jobs:
       - fs.createDir $(dst)/$(answers.registryDir)/$(krm.jobs.catalogs.path)/_$(answers.catalogName)
       - quiet: $item = cr.getItem $(src)/catalog/catalog.yaml.hbs
       - quiet: $content = hbs.render $(item.value) $(answers)
-      - file.write $(content) $(dst)/$(krm.dirName)/$(krm.jobs.catalogs.path)/$(answers.catalogName).yaml
+      - file.write $(content) $(dst)/$(answers.registryDir)/$(krm.jobs.catalogs.path)/$(answers.catalogName).yaml
