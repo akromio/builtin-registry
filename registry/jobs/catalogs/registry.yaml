@@ -53,3 +53,15 @@ jobs:
       - quiet: $item = cr.getItem $(src)/catalog/catalog.yaml.hbs
       - quiet: $content = hbs.render $(item.value) $(answers)
       - file.write $(content) $(dst)/$(answers.registryDir)/$(krm.jobs.catalogs.path)/$(answers.catalogName).yaml
+
+  - macro: bug-report-issue-template
+    title: Create an issue template for bug reports
+    steps:
+      - fs.createDir $(dst)/.github/ISSUE_TEMPLATE
+      - cr.copy $(src)/issue-templates/bug-report.yaml $(dst)/.github/ISSUE_TEMPLATE/bug-report.yaml
+  
+  - macro: feature-request-issue-template
+    title: Create an issue template for feature requests
+    steps:
+      - fs.createDir $(dst)/.github/ISSUE_TEMPLATE
+      - cr.copy $(src)/issue-templates/feature-request.yaml $(dst)/.github/ISSUE_TEMPLATE/feature-request.yaml
