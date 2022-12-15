@@ -5,6 +5,11 @@ desc: {{desc}}
 #   - const: name
 #     desc: description
 #     value: value
+#     defaultValue: value
 
-# jobDefaultName: jobName
-jobs: []
+defaultJobName: default
+jobs:
+  - macro: default
+    desc: Default job.
+    steps:
+      - log hello world!
