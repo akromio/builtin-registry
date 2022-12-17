@@ -16,7 +16,11 @@ dataset:
     tags: [hidden, questions]
     value:
       - input: pluginName
+        title: Plugin package name
+
       - input: pluginAbbr
+        title: Plugin name (that is, the name to use in the catalogs)
+        
       - input: pluginDesc
 
       - select: programmingLanguage
