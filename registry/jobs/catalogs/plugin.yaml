@@ -73,7 +73,7 @@ jobs:
   - macro: op
     title: Create an operation scaffold
     ini:
-      - quiet: inquire $(opQ) $(answers)
+      - quiet: $answers = inquire $(opQ) $(answers)
     local: [item, content]
     steps:
       - quiet: $item = cr.getItem $(src)/src/ops/op.dog.hbs
