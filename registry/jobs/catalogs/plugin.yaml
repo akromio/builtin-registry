@@ -74,6 +74,10 @@ jobs:
       - quiet: $content = hbs.render $(item.value) $(answers)
       - file.write $(content) $(dst)/src/index.dog
 
+      - quiet: $item = cr.getItem $(src)/src/index.test.dog.hbs
+      - quiet: $content = hbs.render $(item.value) $(answers)
+      - file.write $(content) $(dst)/src/index.test.dog
+
   - macro: op
     title: Create an operation scaffold
     ini:
@@ -83,4 +87,9 @@ jobs:
       - quiet: $item = cr.getItem $(src)/src/ops/op.dog.hbs
       - quiet: $content = hbs.render $(item.value) $(answers)
       - file.write $(content) $(dst)/src/ops/$(answers.opName).dog
+
+      - quiet: $item = cr.getItem $(src)/src/ops/op.test.dog.hbs
+      - quiet: $content = hbs.render $(item.value) $(answers)
+      - file.write $(content) $(dst)/src/ops/$(answers.opName).test.dog
+
       - [log, add to src/index.dog => $(answers.opName) = use("./ops/$(answers.opName)")]
