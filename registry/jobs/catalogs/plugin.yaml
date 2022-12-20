@@ -51,7 +51,7 @@ jobs:
     title: Create plugin scaffold
     ini:
       - quiet: $answers = inquire $(pluginQ) $(answers)
-    local: [item, content]
+    dataset: [item, content]
     steps:
       - fs.createDir $(dst)/src
       - fs.createDir $(dst)/src/ops
@@ -82,7 +82,7 @@ jobs:
     title: Create an operation scaffold
     ini:
       - quiet: $answers = inquire $(opQ) $(answers)
-    local: [item, content]
+    dataset: [item, content]
     steps:
       - quiet: $item = cr.getItem $(src)/src/ops/op.dog.hbs
       - quiet: $content = hbs.render $(item.value) $(answers)

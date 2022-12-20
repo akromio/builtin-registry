@@ -35,7 +35,7 @@ jobs:
     title: Create registry
     ini:
       - quiet: $answers = inquire $(createRegistryQ) $(answers)
-    local: [item, content]
+    dataset: [item, content]
     steps:
       - fs.createDir $(dst)/$(answers.registryDir)/$(krm.jobs.catalogs.path)
       - cr.copy $(src)/_gitignore $(dst)/.gitignore
@@ -47,7 +47,7 @@ jobs:
     title: Create catalog
     ini:
       - quiet: $answers = inquire $(createCatalogQ) $(answers)
-    local: [item, content]
+    dataset: [item, content]
     steps:
       - fs.createDir $(dst)/$(answers.registryDir)/$(krm.jobs.catalogs.path)/_$(answers.catalogName)
       - quiet: $item = cr.getItem $(src)/catalog/catalog.yaml.hbs
