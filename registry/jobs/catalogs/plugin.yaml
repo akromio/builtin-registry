@@ -63,11 +63,8 @@ jobs:
       - cr.copy $(src)/dogmac.yaml $(dst)/dogmac.yaml
 
       - quiet: $item = cr.getItem $(src)/package.json.dogma.hbs
-      - log $(item.cty)
-      - log $(item.value)
       - quiet: $content = hbs.render $(item.value) $(answers)
       - file.write $(content) $(dst)/package.json
-      
 
       - quiet: $item = cr.getItem $(src)/README.md.hbs
       - quiet: $content = hbs.render $(item.value) $(answers)
