@@ -65,6 +65,7 @@ jobs:
       - quiet: $item = cr.getItem $(src)/package.json.dogma.hbs
       - quiet: $content = hbs.render $(item.value) $(answers)
       - file.write $(content) $(dst)/package.json
+      - log $(content)
 
       - quiet: $item = cr.getItem $(src)/README.md.hbs
       - quiet: $content = hbs.render $(item.value) $(answers)
