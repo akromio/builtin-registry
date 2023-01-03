@@ -1,0 +1,48 @@
+spec: v1.0
+desc: {{desc}}
+
+# dataset:
+#   - const: name
+#     desc: description
+#     value: value
+#     defaultValue: value
+
+stages:
+  - sleep: pause
+    desc: A pause.
+    duration: 10s
+    
+  - const: warmup
+    desc: Warm-up stage for filling the cache.
+    duration: 10s
+    interval:
+      duration: 1s
+      requests: 5
+    jobs:
+      - registry: git:///performance
+        catalog: webservice
+        job: web
+        weight: 100
+
+  - inc: load
+    desc: Constante load stage for performance analysis.
+    duration: 10s
+    interval:
+      duration: 1s
+      requests: 1
+      inc: 0.5
+    jobs:
+      - registry: git:///performance
+        catalog: webservice
+        job: web
+        weight: 50
+      
+      - registry: git:///performance
+        catalog: webservice
+        job: android
+        weight: 30
+      
+      - registry: git:///performance
+        catalog: webservice
+        job: ios
+        weight: 20

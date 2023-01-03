@@ -1,5 +1,5 @@
 spec: v1.0
-desc: Catalog for working with Akromio job catalogs.
+desc: Catalog for working with stage catalogs.
 
 dataset:
   - const: src
@@ -9,10 +9,10 @@ dataset:
   
   - const: dst
     desc: Local directory where to save the new catalog.
-    value: $(workDir)/$(krm.dirName)/$(krm.jobs.catalogs.path)
+    value: $(workDir)/$(krm.dirName)/$(krm.stages.catalogs.path)
   
-  - const: newJobCatalogQ
-    desc: Questions to perform for a new job catalog
+  - const: createQ
+    desc: Questions to build a new stage catalog
     tags: [hidden, questions]
     value:
       - input: name
@@ -20,15 +20,15 @@ dataset:
       
       - input: desc
         title: Catalog description
-
+  
 defaultJobName: create
 jobs:
   - macro: create
-    title: Create new job catalog
+    title: Create new stage catalog
     ini:
-      - quiet: $answers = inquire $(newJobCatalogQ) $(answers)
+      - quiet: $answers = inquire $(createQ) $(answers)
     steps:
       - fs.createDir $(dst)
-      - quiet: $item = cr.getItem $(src)/job-catalog.yaml.hbs
+      - quiet: $item = cr.getItem $(src)/catalog.yaml.hbs
       - quiet: $content = hbs.render $(item.value) $(answers)
       - file.write $(content) $(dst)/$(answers.name).yaml
